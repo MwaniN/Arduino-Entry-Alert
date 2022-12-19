@@ -73,7 +73,7 @@ void loop(){
     }
   }
 
-  //playsounds(val1, val2);
+  playsounds();
 
 }
 
@@ -93,7 +93,7 @@ void activateSound(int pin) {
   digitalWrite(pin, HIGH); // bring the pin high again to end the activation
 }
 
-/* void playsounds()
+void playsounds()
 {
     int state1 = digitalRead(inputPin1);
     int state2 = digitalRead(inputPin2);
@@ -102,12 +102,14 @@ void activateSound(int pin) {
     {
         if(state1 == 1)
         {
-            while(state1)
+            while(state1 == 1)
             {
                 state1 = digitalRead(inputPin1);
                 delay(1);
+                Serial.println(state1);
             }
             pirTime1 = millis();
+            Serial.println("We made a timestamp successfully");
         }
         else if(state2 == 1)
         {
@@ -115,6 +117,7 @@ void activateSound(int pin) {
             {
                 state2 = digitalRead(inputPin2);
                 delay(1);
+                Serial.println(state2);
             }
             pirTime2 = millis();
         }
@@ -136,4 +139,4 @@ void activateSound(int pin) {
         delay(100);
     }
     delay(100); 
-} */
+}
