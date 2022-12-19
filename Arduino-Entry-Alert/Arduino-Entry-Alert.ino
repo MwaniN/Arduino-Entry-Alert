@@ -72,8 +72,8 @@ void loop(){
       pirState2 = LOW;
     }
   }
-
-  playsounds();
+  direction(val1,val2);
+  //playsounds();
 
 }
 
@@ -93,7 +93,23 @@ void activateSound(int pin) {
   digitalWrite(pin, HIGH); // bring the pin high again to end the activation
 }
 
-void playsounds()
+void direction(int input1, int input2){
+
+  if ((detection == 0) && (input1 == 1)){
+    detection = 2;
+  }
+  else if ((detection == 0) && (input2 == 2)){
+    detection = 3;
+  }
+  Serial.println(detection);
+
+
+
+
+}
+
+
+/* void playsounds()
 {
     int state1 = digitalRead(inputPin1);
     int state2 = digitalRead(inputPin2);
@@ -109,7 +125,6 @@ void playsounds()
                 Serial.println(state1);
             }
             pirTime1 = millis();
-            Serial.println("We made a timestamp successfully");
         }
         else if(state2 == 1)
         {
@@ -122,14 +137,13 @@ void playsounds()
             pirTime2 = millis();
         }
     }
-
     if((pirTime1 != 0) && (pirTime2 != 0))
     {
 
         if(pirTime1 > pirTime2)
              Serial.println("Leaving");
         else if(pirTime1 < pirTime2)
-             Serial.println("Entering");
+             Serial.println(pirTime1);
         else
             Serial.println("pirTime1 = pirTime2; Very Rare");
 
@@ -139,4 +153,4 @@ void playsounds()
         delay(100);
     }
     delay(100); 
-}
+}*/
