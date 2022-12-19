@@ -93,22 +93,25 @@ void activateSound(int pin) {
   digitalWrite(pin, HIGH); // bring the pin high again to end the activation
 }
 
-/* void playsounds(int state1, int state2)
+/* void playsounds()
 {
-    if((state1 == HIGH) || (state2 == HIGH))
+    int state1 = digitalRead(inputPin1);
+    int state2 = digitalRead(inputPin2);
+
+    if((state1 == 1) || (state2 == 1))
     {
-        if(state1 == HIGH)
+        if(state1 == 1)
         {
-            while(state1 = HIGH)
+            while(state1)
             {
                 state1 = digitalRead(inputPin1);
                 delay(1);
             }
             pirTime1 = millis();
         }
-        else if(state2 == HIGH)
+        else if(state2 == 1)
         {
-            while(state2 == HIGH)
+            while(state2 == 1)
             {
                 state2 = digitalRead(inputPin2);
                 delay(1);
