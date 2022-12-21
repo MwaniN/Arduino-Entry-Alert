@@ -7,12 +7,10 @@
 // int ledPin = 13;                // choose the pin for the LED
 int inputPin1 = 2;               // choose the first input pin (for PIR sensor)
 int inputPin2 = 3;               // choose the second input pin (for PIR sensor)
-int workingPin = 9;             // pin for the sound "Working"
-int livelongPin = 8;             // pin for the sound "Live long and prosper"
-int openPin = 7;                 // pin for the opening door sound
-int fastPin = 10;                // pin for when someone goes too fast
-volatile int leftOn = 0;
-volatile int rightOn = 0;
+int readyPin = 9;             // pin for the sound "I'm Ready"
+int byePin = 8;             // pin for the sound "Goodbye for Now"
+int welcomePin = 7;                 // pin for the sound "Welcome Back"
+int slowdownPin = 10;                // pin for the sound "Slow Down"
 
 volatile unsigned long int pirTime1 = 0;
 volatile unsigned long int pirTime2 = 0;
@@ -22,11 +20,15 @@ void setup() {
   pinMode(inputPin1, INPUT);     // declare sensor as input
   pinMode(inputPin2, INPUT);     // declare sensor as input
 
-  setupSound(workingPin);
-  //activateSound(workingPin);
+  setupSound(slowdownPin);
+  setupSound(welcomePin);
+  setupSound(byePin);
+  setupSound(readyPin);
+
+  activateSound(readyPin);
 
   Serial.begin(9600);
-  Serial.println("pretend it said working");
+  Serial.println("pretend it said ready");
   attachInterrupt(digitalPinToInterrupt(2), rightActivating, RISING);
   attachInterrupt(digitalPinToInterrupt(3), leftActivating, RISING);
 
@@ -36,19 +38,29 @@ void loop(){
   if (pirTime1 != 0  && pirTime2 != 0)
   {
     if (pirTime1 > pirTime2){ 
-      Serial.println(pirTime1);
-      Serial.println(pirTime2);
       Serial.println(pirTime1 - pirTime2);
       Serial.println("This was entering");
+      if ((pirTime1 - pirTime2) < 100000){
+        Serial.println("Too fast!");
+        activateSound(slowdownPin);
+        }     
+      else {
+           activateSound(welcomePin);
+           }
       }
     else {
       Serial.println(pirTime2 - pirTime1);
       Serial.println("This was exiting");
+      if ((pirTime2 - pirTime1) < 100000){
+        Serial.println("Too fast!");
+        activateSound(slowdownPin);
+      }
+      else{
+        activateSound(byePin);
+      }
       }
 
-    // nointerrupts();
     pirTime1 = pirTime2 = 0;
-    // interrupts();
   }
 
 }
@@ -70,12 +82,10 @@ void activateSound(int pin) {
 }
 
 void rightActivating(){
-  rightOn = 1;
   pirTime1 = micros();
 }
 
 void leftActivating(){
-  leftOn = 1;
   pirTime2 = micros();
   
 }
