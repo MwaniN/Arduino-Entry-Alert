@@ -4,13 +4,9 @@
  */
 
  
-int ledPin = 13;                // choose the pin for the LED
-int inputPin1 = 2;               // choose the input pin (for PIR sensor)
+// int ledPin = 13;                // choose the pin for the LED
+int inputPin1 = 2;               // choose the first input pin (for PIR sensor)
 int inputPin2 = 3;               // choose the second input pin (for PIR sensor)
-int pirState1 = LOW;             // we start, assuming no motion detected
-int pirState2 = LOW;
-int val1 = 0;                    // variable for reading the pin status
-int val2 = 0;
 int workingPin = 9;             // pin for the sound "Working"
 int livelongPin = 8;             // pin for the sound "Live long and prosper"
 int openPin = 7;                 // pin for the opening door sound
@@ -22,7 +18,7 @@ volatile unsigned long int pirTime1 = 0;
 volatile unsigned long int pirTime2 = 0;
 
 void setup() {
-  pinMode(ledPin, OUTPUT);      // declare LED as output
+  //pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin1, INPUT);     // declare sensor as input
   pinMode(inputPin2, INPUT);     // declare sensor as input
 
@@ -40,12 +36,14 @@ void loop(){
   if (pirTime1 != 0  && pirTime2 != 0)
   {
     if (pirTime1 > pirTime2){ 
+      Serial.println(pirTime1);
+      Serial.println(pirTime2);
       Serial.println(pirTime1 - pirTime2);
-      Serial.println("This was exiting");
+      Serial.println("This was entering");
       }
     else {
       Serial.println(pirTime2 - pirTime1);
-      Serial.println("This was entering");
+      Serial.println("This was exiting");
       }
 
     // nointerrupts();
