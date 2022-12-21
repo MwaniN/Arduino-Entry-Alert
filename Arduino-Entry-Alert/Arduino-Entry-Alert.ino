@@ -21,11 +21,6 @@ volatile int rightOn = 0;
 volatile unsigned long int pirTime1 = 0;
 volatile unsigned long int pirTime2 = 0;
 
-attachInterrupt(digitalPinToInterrupt(2), rightActivating, RISING);
-attachInterrupt(digitalPinToInterrupt(3), leftActivating, RISING);
-
-
-
 void setup() {
   pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin1, INPUT);     // declare sensor as input
@@ -36,6 +31,8 @@ void setup() {
 
   Serial.begin(9600);
   Serial.println("pretend it said working");
+  attachInterrupt(digitalPinToInterrupt(2), rightActivating, RISING);
+  attachInterrupt(digitalPinToInterrupt(3), leftActivating, RISING);
 
 }
  
