@@ -1,5 +1,5 @@
 /*
- * PIR sensor tester
+ * Arduino-Entry-Alert
  * 1 refers to the right PIR motion sensor
  */
 
@@ -11,14 +11,19 @@ int pirState1 = LOW;             // we start, assuming no motion detected
 int pirState2 = LOW;
 int val1 = 0;                    // variable for reading the pin status
 int val2 = 0;
-int detection = 0;              // Right to Left will turn it to 1 and Left to Right will turn it to 2
 int workingPin = 9;             // pin for the sound "Working"
 int livelongPin = 8;             // pin for the sound "Live long and prosper"
 int openPin = 7;                 // pin for the opening door sound
 int fastPin = 10;                // pin for when someone goes too fast
+volatile int leftOn = 0;
+volatile int rightOn = 0;
 
-unsigned long int pirTime1 = 0;
-unsigned long int pirTime2 = 0;
+volatile unsigned long int pirTime1 = 0;
+volatile unsigned long int pirTime2 = 0;
+
+attachInterrupt(digitalPinToInterrupt(2), rightActivating, RISING);
+attachInterrupt(digitalPinToInterrupt(3), leftActivating, RISING);
+
 
 
 void setup() {
@@ -35,7 +40,25 @@ void setup() {
 }
  
 void loop(){
-  val1 = digitalRead(inputPin1);  // read input value
+  if (pirTime1 != 0  && pirTime2 != 0)
+  {
+    if (pirTime1 > pirTime2){ 
+      Serial.println(pirTime1 - pirTime2);
+      Serial.println("This was exiting");
+      }
+    else {
+      Serial.println(pirTime2 - pirTime1);
+      Serial.println("This was entering");
+      }
+
+    // nointerrupts();
+    pirTime1 = pirTime2 = 0;
+    // interrupts();
+  }
+
+
+
+  /* val1 = digitalRead(inputPin1);  // read input value
   if (val1 == HIGH) {            // check if the input is HIGH
     digitalWrite(ledPin, HIGH);  // turn LED ON
     if (pirState1 == LOW) {
@@ -72,8 +95,8 @@ void loop(){
       pirState2 = LOW;
     }
   }
-  direction(val1,val2);
-  //playsounds();
+
+  //playsounds(); */
 
 }
 
@@ -93,22 +116,16 @@ void activateSound(int pin) {
   digitalWrite(pin, HIGH); // bring the pin high again to end the activation
 }
 
-void direction(int input1, int input2){
-
-  if ((detection == 0) && (input1 == 1)){
-    detection = 2;
-  }
-  else if ((detection == 0) && (input2 == 2)){
-    detection = 3;
-  }
-  Serial.println(detection);
-
-
-
-
+void rightActivating(){
+  rightOn = 1;
+  pirTime1 = micros();
 }
 
-
+void leftActivating(){
+  leftOn = 1;
+  pirTime2 = micros();
+  
+}
 /* void playsounds()
 {
     int state1 = digitalRead(inputPin1);
