@@ -53,48 +53,6 @@ void loop(){
     // interrupts();
   }
 
-
-
-  /* val1 = digitalRead(inputPin1);  // read input value
-  if (val1 == HIGH) {            // check if the input is HIGH
-    digitalWrite(ledPin, HIGH);  // turn LED ON
-    if (pirState1 == LOW) {
-      // we have just turned on
-      Serial.println("Motion detected on right sensor!");
-      // We only want to print on the output change, not state
-      pirState1 = HIGH;
-    }
-  } else {
-    digitalWrite(ledPin, LOW); // turn LED OFF
-    if (pirState1 == HIGH){
-      // we have just turned of
-      Serial.println("Motion ended on right sensor!");
-      // We only want to print on the output change, not state
-      pirState1 = LOW;
-    }
-  }
-
-  val2 = digitalRead(inputPin2);  // read input value
-  if (val2 == HIGH) {            // check if the input is HIGH
-    digitalWrite(ledPin, HIGH);  // turn LED ON
-    if (pirState2 == LOW) {
-      // we have just turned on
-      Serial.println("Motion detected on left sensor!");
-      // We only want to print on the output change, not state
-      pirState2 = HIGH;
-    }
-  } else {
-    digitalWrite(ledPin, LOW); // turn LED OFF
-    if (pirState2 == HIGH){
-      // we have just turned of
-      Serial.println("Motion ended on left sensor!");
-      // We only want to print on the output change, not state
-      pirState2 = LOW;
-    }
-  }
-
-  //playsounds(); */
-
 }
 
 void setupSound(int pin) {
@@ -123,48 +81,3 @@ void leftActivating(){
   pirTime2 = micros();
   
 }
-/* void playsounds()
-{
-    int state1 = digitalRead(inputPin1);
-    int state2 = digitalRead(inputPin2);
-
-    if((state1 == 1) || (state2 == 1))
-    {
-        if(state1 == 1)
-        {
-            while(state1 == 1)
-            {
-                state1 = digitalRead(inputPin1);
-                delay(1);
-                Serial.println(state1);
-            }
-            pirTime1 = millis();
-        }
-        else if(state2 == 1)
-        {
-            while(state2 == 1)
-            {
-                state2 = digitalRead(inputPin2);
-                delay(1);
-                Serial.println(state2);
-            }
-            pirTime2 = millis();
-        }
-    }
-    if((pirTime1 != 0) && (pirTime2 != 0))
-    {
-
-        if(pirTime1 > pirTime2)
-             Serial.println("Leaving");
-        else if(pirTime1 < pirTime2)
-             Serial.println(pirTime1);
-        else
-            Serial.println("pirTime1 = pirTime2; Very Rare");
-
-        pirTime1 = 0;
-        pirTime2 = 0;
-
-        delay(100);
-    }
-    delay(100); 
-}*/
