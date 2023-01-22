@@ -42,9 +42,11 @@ void loop(){
       if ((pirTime1 - pirTime2) < 100000){
         Serial.println("Too fast!");
         activateSound(slowdownPin);
+        pirTime1 = pirTime2 = 0;
         }     
       else {
-           activateSound(welcomePin);
+           activateSound(byePin);
+           pirTime1 = pirTime2 = 0;
            }
       }
     else {
@@ -53,9 +55,11 @@ void loop(){
       if ((pirTime2 - pirTime1) < 100000){
         Serial.println("Too fast!");
         activateSound(slowdownPin);
+        pirTime1 = pirTime2 = 0;
       }
       else{
-        activateSound(byePin);
+        activateSound(welcomePin);
+        pirTime1 = pirTime2 = 0;
       }
       }
 
