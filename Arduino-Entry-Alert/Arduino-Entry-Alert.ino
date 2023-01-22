@@ -28,7 +28,6 @@ void setup() {
   activateSound(readyPin);
 
   Serial.begin(9600);
-  Serial.println("pretend it said ready");
   attachInterrupt(digitalPinToInterrupt(2), rightActivating, RISING);
   attachInterrupt(digitalPinToInterrupt(3), leftActivating, RISING);
 
